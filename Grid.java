@@ -17,6 +17,7 @@ public Grid(int rows, int cols, boolean[][] grid)
  
 }
 
+@Override
 public String toString()
 {
  String gridString = "";
@@ -39,9 +40,42 @@ public int blobCount()
 {
  int count = 0;
  // Your code goes here
+ Grid grid2 = new Grid(rows, cols, this.grid);
+ for (int i = 0; i < rows; i++){
+	 
+	 for (int j = 0; j < cols; j++){
+		 
+		 if (grid2.grid[i][j]){
+			 count += 1;
+			 checkBlob(i, j, grid2);
+		 }
+	 }
+ }
+ 
  return count;
 }
 
 // You may define heper methods as needed
+
+public void checkBlob(int i, int j, Grid g){
+        if (i < 0 || j < 0 || i >= rows || j >= cols){
+                return;
+        }
+	if (g.grid[i][j]){
+		g.grid[i][j] = false;
+		checkBlob(i-1, j, g);
+		checkBlob(i+1, j, g);
+		checkBlob(i, j-1, g);
+		checkBlob(i, j+1, g);
+	}
+}
+
+/*public static void main(String[] args){
+        boolean f[][] = {{true, true}, {false, true}};
+	Grid g = new Grid(2, 2, f);
+	int i = g.blobCount();
+        System.out.println(i);
+}
+*/
 }
 
